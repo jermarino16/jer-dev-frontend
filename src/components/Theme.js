@@ -1,19 +1,33 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 
-const arcBlue = "#0B72B9";
-const arcOrange = "#FFBA60";
+const myBlack = "#5D5C61";
+const myGray = "#379683";
 
 export default createMuiTheme({
   palette: {
     common: {
-      blue: `${arcBlue}`,
-      orange: `${arcOrange}`,
+      black: `${myBlack}`,
+      gray: `${myGray}`,
     },
     primary: {
-      main: `${arcBlue}`,
+      main: `${myBlack}`,
     },
     secondary: {
-      main: `${arcOrange}`,
+      main: `${myGray}`,
+    },
+  },
+  typography: {
+    h3: {
+      fontFamily: "BioRhyme",
+      textTransform: "none",
+      fontWeight: 500,
+      fontSize: "2rem",
+    },
+    h5: {
+      fontFamily: "BioRhyme",
+      textTransform: "none",
+      fontWeight: 400,
+      fontSize: "1.25rem",
     },
   },
 });

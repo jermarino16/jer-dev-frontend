@@ -30,42 +30,9 @@ const useStyles = makeStyles((theme) => ({
     height: "6rem",
     zIndex: theme.zIndex.modal + 1,
   },
-  drawer: {
-    backgroundColor: theme.palette.common.green,
-  },
-  drawerIcon: {
-    height: "50px",
-    width: "50px",
-    color: "white",
-  },
-  drawerIconContainer: {
-    marginLeft: "auto",
-    "&:hover": {
-      backgroundColor: "transparent",
-    },
-  },
-  listItem: {
-    color: "white",
-    opacity: 0.7,
-    "&:hover": {
-      backgroundColor: "transparent",
-    },
-  },
-  listText: {
-    fontFamily: "BioRhyme",
-    fontWeight: 400,
-    fontSize: "1.25rem",
-  },
   logoContainer: {
     color: "white",
     padding: 0,
-    "&:hover": {
-      backgroundColor: "transparent",
-    },
-  },
-  selectedListItem: {
-    color: "white",
-    opacity: 1,
     "&:hover": {
       backgroundColor: "transparent",
     },

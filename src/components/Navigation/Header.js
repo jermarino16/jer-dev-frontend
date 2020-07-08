@@ -22,6 +22,7 @@ import { makeStyles, useTheme } from "@material-ui/styles";
 
 import Logo from "../Logo";
 import NavLinks from "./NavLinks";
+import Drawer from "./Drawer";
 
 const useStyles = makeStyles((theme) => ({
   appbar: {
@@ -82,7 +83,6 @@ const Header = () => {
   const classes = useStyles();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
-  const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
   const [openDrawer, setOpenDrawer] = useState(false);
 
   const [activeIndex, setActiveIndex] = useState(false);
@@ -90,71 +90,15 @@ const Header = () => {
   const handleActiveIndex = (index) => {
     setActiveIndex(index);
   };
+  const handleDrawer = (openOrClosed) => {
+    setOpenDrawer(openOrClosed);
+  };
 
   const routes = [
     { label: "Home", link: "/", index: false },
     { label: "About", link: "/about", index: 0 },
     { label: "Contact", link: "/contact", index: 1 },
   ];
-
-  const drawers = (
-    <React.Fragment>
-      <SwipeableDrawer
-        disableBackdropTransition={!iOS}
-        disableDiscovery={iOS}
-        open={openDrawer}
-        onOpen={() => setOpenDrawer(true)}
-        onClose={() => setOpenDrawer(false)}
-        classes={{ paper: classes.drawer }}
-      >
-        <div className={classes.toolbarMargin} />
-        <List>
-          <ListItem
-            component={Link}
-            to="/about"
-            selected={activeIndex === 0}
-            className={
-              activeIndex === 0 ? classes.selectedListItem : classes.listItem
-            }
-          >
-            <ListItemIcon onClick={() => setOpenDrawer(false)}>
-              <PermIdentityIcon color="error" />
-            </ListItemIcon>
-            <ListItemText
-              primary="About"
-              onClick={() => setOpenDrawer(false)}
-              className={classes.listText}
-              disableTypography
-            />
-          </ListItem>
-          <ListItem
-            component={Link}
-            to="/contact"
-            selected={activeIndex === 1}
-            className={
-              activeIndex === 1 ? classes.selectedListItem : classes.listItem
-            }
-          >
-            <ListItemIcon onClick={() => setOpenDrawer(false)}>
-              <ContactMailOutlinedIcon color="error" />
-            </ListItemIcon>
-            <ListItemText
-              primary="Contact"
-              onClick={() => setOpenDrawer(!openDrawer)}
-              className={classes.listText}
-              disableTypography
-            />
-          </ListItem>
-        </List>
-      </SwipeableDrawer>
-      <IconButton
-        className={classes.drawerIconContainer}
-        onClick={() => setOpenDrawer(!openDrawer)}
-      >
-        <MenuIcon className={classes.drawerIcon} />
-      </IconButton>
-    </React.Fragment>
-  );
 
   useEffect(() => {
     routes.forEach((route) => {
@@ -178,12 +122,20 @@ const Header = () => {
             component={Link}
             to="/"
             className={classes.logoContainer}
-            onClick={() => handleActiveIndex(false)}
+            onClick={() => {
+              handleActiveIndex(false);
+              handleDrawer(false);
+            }}
           >
             <Logo />
           </Button>
           {matches ? (
-            drawers
+            <Drawer
+              activeIndex={activeIndex}
+              handleActiveIndex={handleActiveIndex}
+              handleDrawer={handleDrawer}
+              openDrawer={openDrawer}
+            />
           ) : (
             <NavLinks
               activeIndex={activeIndex}

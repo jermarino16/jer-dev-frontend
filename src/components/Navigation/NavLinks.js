@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 
 import { Tab, Tabs } from "@material-ui/core";
-
 import { makeStyles } from "@material-ui/styles";
+
+import { NavContext } from "../../context/NavContext";
 
 const useStyles = makeStyles((theme) => ({
   tab: {
@@ -17,11 +18,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const NavLinks = (props) => {
+  const navContext = useContext(NavContext);
   const classes = useStyles();
-  const [selectedIndex, setSelectedIndex] = useState(false);
+  // const [selectedIndex, setSelectedIndex] = useState(false);
 
   const handleChange = (event, newValue) => {
-    setSelectedIndex(newValue);
+    // setSelectedIndex(newValue);
+    console.log(navContext);
+    navContext.activeIndex = newValue;
   };
   const routes = [
     { label: "Home", link: "/", index: false },
@@ -30,24 +34,26 @@ const NavLinks = (props) => {
   ];
 
   useEffect(() => {
+    console.log("render!");
+
     routes.forEach((route) => {
       switch (window.location.pathname) {
         case `${route.link}`:
-          if (selectedIndex !== route.index) {
-            setSelectedIndex(route.index);
+          if (navContext.activeIndex !== route.index) {
+            navContext.activeIndex = route.index;
           }
           break;
         default:
           break;
       }
     });
-  }, [selectedIndex, routes]);
+  }, [routes, navContext.activeIndex]);
 
   return (
     <React.Fragment>
       <Tabs
         className={classes.tabContainer}
-        value={selectedIndex}
+        value={navContext.activeIndex}
         onChange={handleChange}
       >
         <Tab

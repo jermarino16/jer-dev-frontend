@@ -1,19 +1,22 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 
 const myBlack = "#5D5C61";
-const myGray = "#379683";
+const myGreen = "#379683";
 
 export default createMuiTheme({
   palette: {
     common: {
       black: `${myBlack}`,
-      gray: `${myGray}`,
+      green: `${myGreen}`,
     },
     primary: {
       main: `${myBlack}`,
     },
     secondary: {
-      main: `${myGray}`,
+      main: `${myGreen}`,
+    },
+    error: {
+      main: "#FFF",
     },
   },
   typography: {

@@ -1,8 +1,7 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { AppBar, Button, Toolbar, useMediaQuery } from "@material-ui/core";
-import { NavContext } from "../../context/NavContext";
 
 import { makeStyles, useTheme } from "@material-ui/styles";
 
@@ -31,10 +30,36 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Header = () => {
-  const navContext = useContext(NavContext);
   const classes = useStyles();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const [activeIndex, setActiveIndex] = useState(false);
+
+  const handleActiveIndex = (index) => {
+    console.log("header function called");
+    setActiveIndex(index);
+  };
+
+  const routes = [
+    { label: "Home", link: "/", index: false },
+    { label: "About", link: "/about", index: 0 },
+    { label: "Contact", link: "/contact", index: 1 },
+  ];
+
+  useEffect(() => {
+    routes.forEach((route) => {
+      switch (window.location.pathname) {
+        case `${route.link}`:
+          if (activeIndex !== route.index) {
+            setActiveIndex(route.index);
+          }
+          break;
+        default:
+          break;
+      }
+    });
+  }, [routes, activeIndex]);
 
   return (
     <React.Fragment>
@@ -44,13 +69,16 @@ const Header = () => {
             component={Link}
             to="/"
             className={classes.logoContainer}
-            onClick={(event) => {
-              navContext.activeIndex = false;
-            }}
+            onClick={() => handleActiveIndex(false)}
           >
             <Logo />
           </Button>
-          {matches ? null : <NavLinks activeIndex={navContext.activeIndex} />}
+          {matches ? null : (
+            <NavLinks
+              activeIndex={activeIndex}
+              handleActiveIndex={handleActiveIndex}
+            />
+          )}
         </Toolbar>
       </AppBar>
       <div className={classes.toolbarMargin} />

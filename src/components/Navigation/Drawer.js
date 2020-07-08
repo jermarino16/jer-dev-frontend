@@ -77,53 +77,38 @@ const Drawer = (props) => {
       >
         <div className={classes.toolbarMargin} />
         <List>
-          <ListItem
-            component={Link}
-            to="/about"
-            selected={props.activeIndex === 0}
-            className={
-              props.activeIndex === 0
-                ? classes.selectedListItem
-                : classes.listItem
-            }
-            onClick={() => {
-              handleDrawer(false);
-              props.handleActiveIndex(0);
-            }}
-          >
-            <ListItemIcon>
-              <PermIdentityIcon color="error" />
-            </ListItemIcon>
-            <ListItemText
-              primary="About"
-              className={classes.listText}
-              disableTypography
-            />
-          </ListItem>
-          <ListItem
-            component={Link}
-            to="/contact"
-            selected={props.activeIndex === 1}
-            className={
-              props.activeIndex === 1
-                ? classes.selectedListItem
-                : classes.listItem
-            }
-            onClick={() => {
-              handleDrawer(false);
-              props.handleActiveIndex(1);
-            }}
-          >
-            <ListItemIcon onClick={() => handleDrawer(false)}>
-              <ContactMailOutlinedIcon color="error" />
-            </ListItemIcon>
-            <ListItemText
-              primary="Contact"
-              onClick={() => handleDrawer(false)}
-              className={classes.listText}
-              disableTypography
-            />
-          </ListItem>
+          {props.routes.map((route, index) =>
+            index > 0 ? (
+              <ListItem
+                key={`${route.label}${route.index}`}
+                component={Link}
+                to={route.link}
+                selected={props.activeIndex === route.index}
+                className={
+                  props.activeIndex === route.index
+                    ? classes.selectedListItem
+                    : classes.listItem
+                }
+                onClick={() => {
+                  handleDrawer(false);
+                  props.handleActiveIndex(route.index);
+                }}
+              >
+                <ListItemIcon>
+                  {route.index === 0 ? (
+                    <PermIdentityIcon color="error" />
+                  ) : (
+                    <ContactMailOutlinedIcon color="error" />
+                  )}
+                </ListItemIcon>
+                <ListItemText
+                  primary={route.label}
+                  className={classes.listText}
+                  disableTypography
+                />
+              </ListItem>
+            ) : null
+          )}
         </List>
       </SwipeableDrawer>
       <IconButton

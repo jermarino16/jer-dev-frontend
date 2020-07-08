@@ -1,23 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import {
-  AppBar,
-  Button,
-  IconButton,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  SwipeableDrawer,
-  Toolbar,
-  useMediaQuery,
-} from "@material-ui/core";
-import {
-  ContactMailOutlined as ContactMailOutlinedIcon,
-  Menu as MenuIcon,
-  PermIdentity as PermIdentityIcon,
-} from "@material-ui/icons";
+import { AppBar, Button, Toolbar, useMediaQuery } from "@material-ui/core";
+
 import { makeStyles, useTheme } from "@material-ui/styles";
 
 import Logo from "../Logo";
@@ -102,6 +87,7 @@ const Header = () => {
               handleActiveIndex={handleActiveIndex}
               handleDrawer={handleDrawer}
               openDrawer={openDrawer}
+              routes={routes}
             />
           ) : (
             <NavLinks

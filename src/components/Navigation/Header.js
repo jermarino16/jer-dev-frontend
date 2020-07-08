@@ -1,73 +1,50 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-import {
-  AppBar,
-  Avatar,
-  Tab,
-  Tabs,
-  Toolbar,
-  Typography,
-} from "@material-ui/core";
+import { AppBar, Button, Toolbar, useMediaQuery } from "@material-ui/core";
 
-import { makeStyles } from "@material-ui/styles";
-import imageLogo from "../../resources/images/temp.jpg";
+import { makeStyles, useTheme } from "@material-ui/styles";
+
+import Logo from "../Logo";
+import NavLinks from "./NavLinks";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
   appbar: {
     backgroundColor: theme.palette.primary,
     height: "6rem",
   },
-  imageLogo: {
-    marginRight: "20px",
-  },
-  tabContainer: {
-    marginLeft: "auto",
-  },
-  tab: {
-    ...theme.typography.h5,
-    minWidth: 10,
-    marginLeft: "25px",
+  logoContainer: {
+    color: "white",
+    padding: 0,
+    "&:hover": {
+      backgroundColor: "transparent",
+    },
   },
   toolbar: {
     margin: "auto 0",
+  },
+  toolbarMargin: {
+    ...theme.mixins.toolbar,
+    marginBottom: "2.5em",
   },
 }));
 
 const Header = () => {
   const classes = useStyles();
-  //   const theme = useTheme();
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <React.Fragment>
       <AppBar position="fixed" className={classes.appbar}>
         <Toolbar className={classes.toolbar}>
-          <Avatar
-            variant="circle"
-            className={classes.imageLogo}
-            alt="JM"
-            src={imageLogo}
-          />
-          <Typography variant="h3" className={classes.title}>
-            Jeremy Marino
-          </Typography>
-          <Tabs
-            className={classes.tabContainer}
-            value={value}
-            onChange={handleChange}
-          >
-            <Tab className={classes.tab} label="About" />
-            <Tab className={classes.tab} label="Contact" />
-          </Tabs>
+          <Button component={Link} to="/" className={classes.logoContainer}>
+            <Logo />
+          </Button>
+          {matches ? null : <NavLinks activeIndex={false} />}
         </Toolbar>
       </AppBar>
+      <div className={classes.toolbarMargin} />
     </React.Fragment>
   );
 };

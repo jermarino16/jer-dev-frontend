@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 import { Tab, Tabs } from "@material-ui/core";
@@ -29,18 +29,17 @@ const NavLinks = (props) => {
         value={props.activeIndex}
         onChange={handleChange}
       >
-        <Tab
-          className={classes.tab}
-          component={Link}
-          to="/about"
-          label="About"
-        />
-        <Tab
-          className={classes.tab}
-          component={Link}
-          to="/contact"
-          label="Contact"
-        />
+        {props.routes.map((route, index) =>
+          index > 0 ? (
+            <Tab
+              key={`${route.label}${index}`}
+              className={classes.tab}
+              component={Link}
+              to={route.link}
+              label={route.label}
+            />
+          ) : null
+        )}
       </Tabs>
     </React.Fragment>
   );

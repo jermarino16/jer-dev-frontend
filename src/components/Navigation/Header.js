@@ -77,6 +77,7 @@ const Header = () => {
             <NavLinks
               activeIndex={activeIndex}
               handleActiveIndex={handleActiveIndex}
+              routes={routes}
             />
           )}
         </Toolbar>
